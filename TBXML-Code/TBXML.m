@@ -36,7 +36,7 @@
 + (NSError *) errorWithCode:(int)code;
 + (NSError *) errorWithCode:(int)code userInfo:(NSDictionary *)userInfo;
 - (void) decodeBytes;
-- (int) allocateBytesOfLength:(long)length error:(NSError **)error;
+- (NSInteger) allocateBytesOfLength:(long)length error:(NSError **)error;
 - (TBXMLElement*) nextAvailableElement;
 - (TBXMLAttribute*) nextAvailableAttribute;
 @end
@@ -207,12 +207,12 @@
 	return self;
 }
 
-- (int) decodeData:(NSData*)data {
+- (NSInteger) decodeData:(NSData*)data {
     NSError *error = nil;
     return [self decodeData:data withError:&error];
 }
 
-- (int) decodeData:(NSData*)data withError:(NSError **)error {
+- (NSInteger) decodeData:(NSData*)data withError:(NSError **)error {
     
     NSError *localError = nil;
     
@@ -370,7 +370,7 @@
             if (attribute->value[0])
                 value = [NSString stringWithCString:&attribute->value[0] encoding:NSUTF8StringEncoding];
             else
-                value = [NSString stringWithString:@""];
+                value = @"";
             
 			break;
 		}
@@ -580,7 +580,7 @@
                            userInfo:userInfo];
 }
 
-- (int) allocateBytesOfLength:(long)length error:(NSError **)error {
+- (NSInteger) allocateBytesOfLength:(long)length error:(NSError **)error {
     bytesLength = length;
     
     NSError *localError = nil;
